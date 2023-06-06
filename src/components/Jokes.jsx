@@ -5,27 +5,15 @@ import TypewriterComponent from 'typewriter-effect';
 const Jokes = () => {
   const transition = { type: 'tween', duration: 2 };
   const [joke, setJoke] = useState('');
-  const { fetchUrl, host, api_key } = useStateContext();
+  const { fetchUrl } = useStateContext();
   useEffect(() => {
     const fetchJokes = async () => {
-      const req = await fetch(fetchUrl, {
-        params: {
-          format: 'json',
-          contains: 'C%23',
-          idRange: '0-150',
-          blacklistFlags: 'nsfw,racist',
-        },
-        headers: {
-          'X-RapidAPI-Key': api_key,
-          'X-RapidAPI-Host': host,
-        },
-      });
+      const req = await fetch(fetchUrl);
       const data = await req.json();
-      console.log(data);
       setJoke(data);
     };
     try {
-      return () => fetchJokes();
+      fetchJokes();
     } catch (err) {
       console.log(err);
     }
@@ -57,10 +45,10 @@ const Jokes = () => {
 
         {joke ? (
           <div className="jokes-div">
-            <h2>Category: {joke.category}</h2>
+            <h2>Category: {joke.type}</h2>
             <div className="jokes-main">
               <p>{joke.setup}</p>
-              <p>{joke.delivery}</p>
+              <p>{joke.punchline}</p>
               <img
                 src="https://media.giphy.com/media/7GibaLkhx4x6QPNZbV/giphy.gif"
                 className="jokes-image"

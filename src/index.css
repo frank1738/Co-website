@@ -470,6 +470,10 @@ li {
   color: var(--text-color);
 }
 
+.jokes-div > h2 {
+  font-size: 1rem;
+}
+
 .jokes-main {
   text-align: center;
   margin-top: 0.5rem;
